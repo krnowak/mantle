@@ -13,6 +13,7 @@ var (
 	getInitiatorClientScript = util.TrimLeftSpace(`
 #!/bin/bash
 
+set -x
 set -euo pipefail
 
 sudo systemctl start iscsid
@@ -36,6 +37,7 @@ exit 1
 	setupServerScript = util.TrimLeftSpace(`
 #!/bin/bash
 
+set -x
 set -euo pipefail
 
 initiator=${1}
@@ -51,6 +53,9 @@ luns/ create /backstores/fileio/test
 set attribute generate_node_acls=1
 acls/ create ${initiator}
 EOF
+
+echo '/shared/init.script:' >&2
+cat /shared/init.script >&2
 
 docker_args=(
     --privileged
@@ -69,6 +74,7 @@ docker run "${docker_args[@]}" ghcr.io/krnowak/targetcli-fb bash -c 'targetcli <
 	discoverClientScript = util.TrimLeftSpace(`
 #!/bin/bash
 
+set -x
 set -euo pipefail
 
 host_ip=${1}
@@ -101,6 +107,7 @@ systemctl enable iscsi
 	checkClientScript = util.TrimLeftSpace(`
 #!/bin/bash
 
+set -x
 set -euo pipefail
 
 if [[ ! -e /dev/sda ]]; then
