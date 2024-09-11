@@ -63,7 +63,7 @@ docker_args=(
     --rm
 )
 
-docker run "${docker_args[@]}" ghcr.io/flatcar/targetcli-fb bash -c 'targetcli </shared/init.script'
+docker run "${docker_args[@]}" ghcr.io/krnowak/targetcli-fb bash -c 'targetcli </shared/init.script'
 `)
 
 	discoverClientScript = util.TrimLeftSpace(`
