@@ -17,6 +17,12 @@ on:
         default: org
         description: |
           The type of the GitHub account, must be either "org" or "user".
+      force:
+        type: boolean
+        required: false
+        default: false
+        description: |
+          Forces the build, even if latest version already exists.
 
 permissions:
   contents: read
@@ -52,6 +58,7 @@ jobs:
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ACCOUNT: ${{ inputs.ghcr_account }}
         ACCOUNT_TYPE: ${{ inputs.ghcr_account_type }}
+        FORCE: ${{ inputs.force }}
       run: mantle/.github/workflows/bcc_versions.sh
     - name: Set up QEMU
       if: ${{ steps.bcc-versions.outputs.BUILD_VERSION != '' }}
@@ -70,9 +77,9 @@ jobs:
       if: ${{ steps.bcc-versions.outputs.BUILD_VERSION != '' }}
       uses: docker/build-push-action@v6
       with:
-        context: .
+        context: ./mantle/other-dockerfiles/bcc
         file: ./mantle/other-dockerfiles/bcc/Dockerfile
-        platforms: linux/amd64,linux/arm64
+        platforms: linux/amd64
         push: true
         tags: |
           ghcr.io/${{ inputs.ghcr_account }}/bcc:latest

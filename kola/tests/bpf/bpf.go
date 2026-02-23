@@ -16,7 +16,7 @@ import (
 )
 
 // cmdPrefix is a temporary hack to pull `bcc` tools into Flatcar
-const cmdPrefix = "docker run -d --name %s -v /lib/modules:/lib/modules -v /sys/kernel/debug:/sys/kernel/debug -v /sys/fs/cgroup:/sys/fs/cgroup -v /sys/fs/bpf:/sys/fs/bpf --privileged --net host --pid host ghcr.io/flatcar/bcc %s"
+const cmdPrefix = "docker run -d --name %s -v /lib/modules:/lib/modules -v /sys/kernel/debug:/sys/kernel/debug -v /sys/fs/cgroup:/sys/fs/cgroup -v /sys/fs/bpf:/sys/fs/bpf --privileged --net host --pid host ghcr.io/krnowak/bcc %s"
 
 var (
 	plog = capnslog.NewPackageLogger("github.com/flatcar/mantle", "kola/tests/bpf")
